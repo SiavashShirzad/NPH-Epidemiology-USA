@@ -1,55 +1,59 @@
 # NPH Epidemiology in US Aging Cohorts
 
-Analysis code for *Prevalence, Incidence, and Progression of Normal Pressure Hydrocephalus in US Aging Cohorts*.
+Analysis code for *Emergence of Symptoms Over Time in Individuals With Radiologic Evidence of Possible NPH*.
+
+Evans Index, callosal angle, and DESI were measured with the NPH imaging pipeline:
+https://github.com/SiavashShirzad/nph-imaging-pipeline
 
 ## Data
 
-The analyses use participant-level data from four aging cohorts: BLSA, BIOCARD, NACC, and ADNI. These data are not distributed here and must be requested from each cohort directly. Each script expects the corresponding CSV in the working directory:
+Data from BLSA, BIOCARD, NACC, and ADNI are not included and must be requested from each cohort. Set `DATA_DIR` and the file for each input in `FILES` in `config.py`. Each input is a single table (CSV or Excel).
 
-```
-BLSA_epidemiology.csv
-BIOCARD_epidemiology.csv
-NACC_epidemiology.csv
-ADNI_epidemiology.csv
-```
-
-Each file contains one row per participant-visit, with the imaging indices (Evans Index, callosal angle, DESI) and the cohort's native gait and cognitive assessments.
+| Input | Contents |
+|---|---|
+| `blsa` | BLSA visits: imaging measures, SPPB, consensus cognitive status and diagnosis, demographics, death, stroke and TIA history |
+| `blsa_amyloid_pet` | BLSA PiB PET status and estimated age at amyloid onset |
+| `blsa_cognitive_tests` | BLSA Trail Making A and B, Digit Symbol, letter fluency, and CVLT, one row per visit |
+| `biocard` | BIOCARD visits: imaging measures, SPPB, consensus diagnosis, demographics, death, diagnosis flags |
+| `biocard_amyloid_pet` | BIOCARD amyloid PET status |
+| `biocard_csf` | BIOCARD CSF Aβ42 and Aβ40 (Lumipulse) |
+| `biocard_tau_pet` | BIOCARD MK-6240 Braak III and IV SUVR |
+| `biocard_cognition` | BIOCARD executive and episodic memory composites |
+| `nacc` | NACC visits and MRI: imaging measures, gait examination, CDR, diagnoses, neuropathology, demographics |
+| `adni` | ADNI MRI: imaging measures and acquisition date |
+| `adni_visits` | ADNI visits: CDR, gait examination, diagnoses, demographics, medical history, death; `_age` and `_date` columns give the age and date of each measure |
+| `adni_diagnosis` | ADNI diagnostic summary |
+| `adni_amyloid_pet` | ADNI amyloid PET status |
+| `adni_csf` | ADNI CSF p-tau181 and Aβ42 (Elecsys) |
+| `adni_tau_pet` | ADNI flortaucipir meta-temporal SUVR |
+| `adni_cognition` | ADNI-EF and ADNI-MEM composites |
+| `scan_review` | Visual review of flagged scans: decision, revised callosal angle, and DESH rating |
+| `brain_volumes` | DLMUSE total brain volume and intracranial volume for each MRI |
 
 ## Scripts
 
+Run each script from the repository folder. Tables (CSV) and figures (PDF and PNG) are written to `outputs`.
+
 | Script | Output |
 |---|---|
-| `table1_demographics.py` | Table 1 — demographics and follow-up duration |
-| `prevalence_phenotypes.py` | Period prevalence by age band and cohort |
-| `prevalence_figure.py` | Figure 1 — stacked-bar prevalence |
-| `prevalence_desh.py` | Sensitivity analysis using the DESH (DESI) definition |
-| `prevalence_sex_stratified.py` | Age- and sex-stratified prevalence |
-| `prevalence_by_race.py` | Race-stratified prevalence with marginal standardization |
-| `incidence_figure.py` | Figure 2 — stacked-bar incidence |
-| `progression_competing_risks.py` | Figure 3 — cumulative incidence of symptomatic conversion |
-| `followup_duration.py` | Follow-up duration by cohort |
-| `rate_of_change.py` | Mixed-effects cognitive and gait trajectories |
+| `data.py` | Harmonized imaging and clinical data; scan review summary |
+| `table1_demographics.py` | Table 1; eTables 2 and 3 |
+| `prevalence_phenotypes.py` | Figures 1 and 2; eTable 4 |
+| `incidence.py` | eTable 5; eFigure 4 |
+| `progression_competing_risks.py` | Figures 3 and 4; eTables 6 to 8; eFigures 5 and 6 |
+| `imaging_definitions.py` | eFigure 3 |
+| `biomarkers.py` | eFigure 7 |
+| `cognitive_profile.py` | eFigure 8 |
+| `coexisting_conditions.py` | eTable 9; eFigure 9 |
+| `us_projection.py` | eTable 10 |
+| `participant_flow.py` | eFigure 1 |
 
-`incidence_figure.py` reads `NPH_Incidence_Rates_Final.csv`, so run `incidence_rates.py` first. The other scripts are independent.
-
-## Definitions
-
-Radiologic NPH (RNPH) is defined as an Evans Index > 0.30 with a callosal angle < 90°. Participants with RNPH are classified by clinical features into asymptomatic (RNPH-A), gait impairment only (RNPH-G), cognitive impairment only (RNPH-C), or both, corresponding to possible NPH (RNPH-GC).
+`config.py` holds the inputs, thresholds, and shared functions. `covariates.py` builds amyloid, tau, parkinsonism, stroke, and brain volume covariates.
 
 ## Requirements
 
-Python 3.11 with `pandas`, `numpy`, `scipy`, `statsmodels`, `lifelines`, and `matplotlib`.
+Python 3.11 or later with `pandas`, `numpy`, `scipy`, `statsmodels`, `lifelines`, `matplotlib`, and `openpyxl`.
 
 ```
-pip install pandas numpy scipy statsmodels lifelines matplotlib
+pip install pandas numpy scipy statsmodels lifelines matplotlib openpyxl
 ```
-
-## Imaging pipeline
-
-Code for the automated imaging measurements is in separate repositories:
-
-- Evans Index: https://github.com/SiavashShirzad/AutomatedEvansIndex
-- Callosal angle: https://github.com/SiavashShirzad/AutomatedCallosalAngle
-- DESI: https://github.com/SiavashShirzad/Disproportionately-Elevated-Sulcal-Index-DESI-
-
-Trained model weights and the full integrated pipeline are available on reasonable request.
