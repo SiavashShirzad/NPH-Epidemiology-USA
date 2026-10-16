@@ -224,8 +224,8 @@ def sensitivity_analyses():
         comorbid = (base['parkinsonism'] == 1) | (base['stroke'] == 1) | (base['amyloid'] == 1)
         specs = [('Primary (model 2)', base, ADJ_COVARIATES),
                  ('Amyloid-negative participants only', base[base['amyloid'] == 0], [c for c in ADJ_COVARIATES if not c.startswith('amyloid')]),
-                 ('Amyloid status known (complete case)', base[base['amyloid'].notna()], [c for c in ADJ_COVARIATES if c != 'amyloid_unknown']),
-                 ('Amyloid status from PET only', base, [c.replace('amyloid_', 'amyloid_pet_') for c in ADJ_COVARIATES]),
+                 ('Amyloid biomarker status known (complete case)', base[base['amyloid'].notna()], [c for c in ADJ_COVARIATES if c != 'amyloid_unknown']),
+                 ('Amyloid biomarker status from PET only', base, [c.replace('amyloid_', 'amyloid_pet_') for c in ADJ_COVARIATES]),
                  ('Model 2 plus tau PET status', base, ADJ_COVARIATES + TAU_COVARIATES),
                  ('Parkinsonism, stroke, and amyloid positivity excluded', base[~comorbid], BASE_COVARIATES),
                  ('Model 2 plus education', base.dropna(subset=['educ']), ADJ_COVARIATES + ['educ'])]
