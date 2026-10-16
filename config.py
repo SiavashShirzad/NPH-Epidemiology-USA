@@ -54,6 +54,10 @@ N_BOOTSTRAP = 1000
 COHORTS = ['BLSA', 'BIOCARD', 'NACC', 'ADNI']
 PROG_COHORTS = ['BLSA', 'ADNI']
 COGNITION_COHORTS = ['BLSA', 'ADNI', 'NACC']
+# RNPH is the internal label for NPH imaging features (Evans Index > 0.30 with callosal angle < 90 degrees or with DESH).
+# It is an imaging finding only, not a diagnosis of NPH. Suffixes give the clinical presentation:
+# A, no gait or cognitive impairment; G, gait impairment only; C, cognitive impairment only;
+# GC, gait and cognitive impairment; All, any presentation.
 INCIDENCE_OUTCOME_COHORTS = {'RNPH': COHORTS, 'RNPH-G': PROG_COHORTS, 'RNPH-C': COGNITION_COHORTS, 'RNPH-GC': PROG_COHORTS}
 
 US_AGE_2024 = {'60-69': 41085348, '70-79': 28190749, '≥80': 13697651}

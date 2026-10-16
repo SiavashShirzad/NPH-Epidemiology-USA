@@ -5,6 +5,10 @@ Analysis code for *Emergence of Symptoms Over Time in Individuals With Radiologi
 Evans Index, callosal angle, and DESI were measured with the NPH imaging pipeline:
 https://github.com/SiavashShirzad/nph-imaging-pipeline
 
+## Terminology
+
+In the code, `RNPH` labels NPH imaging features (Evans Index > 0.30 with callosal angle < 90° or with DESH). It describes an imaging finding, not a diagnosis of NPH. The suffixes `A`, `G`, `C`, and `GC` mark no impairment, gait impairment only, cognitive impairment only, and both; `All` includes every presentation.
+
 ## Data
 
 Data from BLSA, BIOCARD, NACC, and ADNI are not included and must be requested from each cohort. Set `DATA_DIR` and the file for each input in `FILES` in `config.py`. Each input is a single table (CSV or Excel).
